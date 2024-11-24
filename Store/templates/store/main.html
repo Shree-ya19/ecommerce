@@ -12,7 +12,7 @@
         <!-- Make sure this website looks good on mobile devices -->
     </head>
     <body>
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><!-- can change this dark to light also -->
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #008080;"><!-- can change this dark to light also -->
   <a class="navbar-brand" href="{% url 'store' %}">Re Store</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -32,12 +32,17 @@
 	    	</a>
 	    	<p id="cart-total">0</p></div>
   </div>
+
 </nav>
+
+
         <div class="container">
             {% block content %}
             <!-- This is where child templates can add their content -->
+
             {% endblock %}
         </div>
+
 
         <!-- JS files -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
