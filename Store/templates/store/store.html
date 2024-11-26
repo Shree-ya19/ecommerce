@@ -1,43 +1,21 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
+	<div class="row">
+		{% for product in products %}<!--statement is a for loop in Django's template language, used to iterate over a list of items (in this case, the products).-->
+		<div class="col-lg-4">
+			<img class="thumbnail" src="{{product.imageURL}}">
+			<div class="box-element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<hr>
 
+				<button  class="btn btn-outline-secondary add-btn">Add to Cart</button>
+				<a class="btn btn-outline-success" href="#">View</a>
+				<h4 style="display: inline-block; float: right"><strong>Rs {{product.price}}</strong></h4>
 
- <div class="row">
+			</div>
+		</div>
+		{% endfor %}
+	</div>
 
-<div class="col-lg-4"><!--  gives three column within a row>-->
-<img class="thumbnail" src="{% static 'images/placeholder.png' %}" alt="product"><!--"thumbnail" typically refers to a smaller version of a larger image.-->
- <div class="box-element product"> <!--self created class-->
-<h6><strong>Product</strong></h6>
-<hr> <!--  tag is used to create a horizontal line or rule that separates sections of content, visually marking a thematic break.-->
-<button class=" btn btn-outline-secondary add-btn">Add to cart</button>
- <a class="btn btn-outline-success" href="#">View</a><!-- Success giving green-->
-  <h4 style="display: inline-block;float: right">Rs200</h4>
- </div>
-</div>
-     <div class="col-lg-4"><!--  gives three column within a row>-->
-     <img class="thumbnail" src="{% static 'images/placeholder.png' %}" alt="product">
-     <div class="box-element product">
-     <h6><strong>Product</strong></h6>
-     <hr>
-       <button class=" btn btn-outline-secondary add-btn">Add to cart</button>
-     <a class="btn btn-outline-success" href="#">View</a>
-         <h4 style="display: inline-block;float: right">Rs200</h4>
-     </div>
-     </div>
-
-     <div  class="col-lg-4"><!--  gives three column within a row>-->
-     <img class="thumbnail" src="{% static 'images/placeholder.png' %}" alt="product">
-     <div class="box-element product">
-         <h6><strong>Product</strong></h6>
-    <hr>
-       <button class=" btn btn-outline-secondary add-btn">Add to cart</button>
-     <a class="btn btn-outline-success" href="#">View</a>
-          <h4 style="display: inline-block;float: right">Rs200</h4>
-
-</div>
-  </div>
-
- </div>
-{% endblock %}
-
+{% endblock content %}
