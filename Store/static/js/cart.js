@@ -12,7 +12,7 @@ for (i = 0; i < updateBtns.length; i++) {
 			console.log('User is not authenticated');
 			
 		}else{
-			updateUserOrder(productId, action);
+			console.log('User is authenticated, sending data...');
 		}
 	})
 }
