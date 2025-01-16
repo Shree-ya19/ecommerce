@@ -1,12 +1,17 @@
-from django.shortcuts import render
+from lib2to3.fixes.fix_input import context
+
+from django.shortcuts import render,HttpResponse,redirect
 from django.http import JsonResponse
 import json
 import datetime
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
+from django.contrib.auth.models import User,auth
+from django.db.models import Q
 
 
 def store(request):
+
     data = cartData(request)
 
     cartItems = data['cartItems']
@@ -94,3 +99,35 @@ def processOrder(request):
         )
 
     return JsonResponse('Payment submitted..', safe=False)
+
+def login(request):
+    if request.method=='POST':
+        uname=request.POST['username']
+        pass1=request.POST['password']
+        user=auth.authenticate(username=uname,password=pass1)
+
+        if user is not None:
+            auth.login(request,user)
+            return redirect('store')
+        else:
+            error_message = "Invalid username or password. Please try again."
+            return render(request, 'store/login.html', {'error_message': error_message})
+
+    return render(request,'store/login.html')
+
+def signup(request):
+    if request.method=='POST':
+        uname=request.POST['username']
+        email=request.POST['email']
+        pass1=request.POST['password']
+        pass2=request.POST['confirm_password']
+        if pass1!= pass2:
+            return HttpResponse("your password and confirm password is not true")
+
+        data =User.objects.create_user(username=uname, email=email, password=pass1)
+        data.save()
+        return redirect("login")
+
+
+    return render(request,'store/signup.html')
+

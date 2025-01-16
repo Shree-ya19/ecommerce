@@ -1,0 +1,112 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <!-- Bootstrap CSS (via CDN) -->
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e0f7fa;  /* Light cyan background */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .form-container img {
+            width: 120px; /* Logo size */
+            margin-bottom: 30px;
+             border: 4px solid #00796b; /* Add border around the logo */
+             border-radius: 50%; /* Optional: Make the border rounded (circle) */
+             padding: 8px; /* Optional: Space between the image and border */
+        }
+
+        h3 {
+            color: #00796b;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            border-radius: 25px;
+            box-shadow: none;
+            border: 1px solid #4caf50;  /* Green border */
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            border-color: #00796b; /* Teal border */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #00796b;  /* Teal button */
+            border-color: #00796b;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #004d40;  /* Dark teal button */
+            border-color: #004d40;
+        }
+
+        .text-center a {
+            color: #00796b; /* Teal links */
+            text-decoration: none;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <!-- Logo -->
+        <div class="text-center mb-4">
+            <img src="{% static 'images/restore.png'%}" alt="Logo"> <!-- Replace with your logo -->
+        </div>
+
+        <!-- Login Form -->
+        <h3 class="text-center">Login</h3>
+        <form action="/login" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <!-- Register Links -->
+        <div class="text-center mt-2">
+            <p>Create a account <a href="{% url 'signup' %}">Register</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and Popper.js (via CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
