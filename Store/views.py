@@ -141,8 +141,8 @@ def signup_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username=forms.cleaned_data["username"]
-            password=forms.cleaned_data["password1"]
+            username=form.cleaned_data["username"]
+            password=form.cleaned_data["password1"]
             #log in user
             user= authenticate(username=username,password=password)
             login(request,user)
