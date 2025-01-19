@@ -1,0 +1,126 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Set the entire page background color */
+        body {
+            background-color: #00796b; /* The desired background color for the whole page */
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* About Us section styling */
+        .about-section {
+            position: relative;
+            padding: 50px 0;
+            background-color: #fff;  /* White background for the about section */
+            color: #333;  /* Dark text color for better readability */
+            border-radius: 30px;  /* Smooth rounded corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  /* Subtle shadow around the section */
+            max-width: 1200px;
+            margin: 50px auto;  /* Center the about section on the page */
+            overflow: hidden;  /* Prevent content from spilling out */
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: -60px;  /* Position it above the content */
+            left: 0;
+            width: 100%;
+            height: 100px;  /* Height of the curve */
+            background: #ffc107; /* Updated to match the 'Visit Restore' button color */
+            border-radius: 50% 50% 0 0;  /* Creates the smooth top curve */
+        }
+
+        /* Image styling */
+        .about-img {
+            max-height: 400px;
+            width: 100%;
+            object-fit: cover;  /* Ensures the image covers the div without distortion */
+            border-radius: 15px;  /* Rounded corners for the image */
+        }
+
+        /* Logo styling - white rounded background */
+        .logo-container {
+            background-color: #fff;  /* White background */
+            border-radius: 50%;  /* Round shape */
+            padding: 20px;
+            display: inline-block;  /* To fit the image neatly */
+        }
+
+        .about-text {
+            font-size: 18px;
+            text-align: justify; /* Justifies the text */
+        }
+
+        /* Button styling */
+        .btn-restore {
+            background-color: #ff6347; /* Restore button color */
+            color: white;
+            margin-top: 20px;
+        }
+
+        .btn-restore:hover {
+            background-color: #e53e3e; /* Darker shade on hover */
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 20px;
+            }
+
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-img-wrapper {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- About Us Section -->
+    <div class="container about-section">
+        <div class="row align-items-center">
+            <!-- Image on the left -->
+            <div class="col-md-6">
+                <div class="logo-container">
+                    <img src="{% static 'images/restore.png' %}" class="about-img" alt="About Us">
+                </div>
+            </div>
+
+            <!-- About Text on the right -->
+            <div class="col-md-6">
+                <h2>About Us</h2>
+                <p class="about-text">
+                    "Quality Meets Affordability"<br>
+                    Welcome to our website! We are a passionate team dedicated to bringing you the best secondhand products and services. Our goal is to offer a seamless shopping experience, from the moment you enter our store to the time you make your purchase.
+                </p>
+                <p class="about-text">
+                    We believe in quality, customer satisfaction, and trust. Explore our store and discover a wide range of secondhand items that suit your needs. Thank you for visiting our website.
+                </p>
+
+                <!-- Button to the restore page -->
+                <a href="{% url 'store' %}" class="btn btn-warning" style="margin-right: 10px;"> Visit Our Store</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (required for some components) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

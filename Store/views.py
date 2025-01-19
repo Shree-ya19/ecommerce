@@ -17,6 +17,8 @@ from django import forms
 from django.contrib import messages
 
 
+def home(request):
+    return render(request,'store/home.html')
 
 
 def store(request):
@@ -149,3 +151,6 @@ def signup_user(request):
 
 
     return render(request,'store/signup.html',{'form': form})
+
+def search(request):
+    return render(request,'store/search.html')
