@@ -1,5 +1,6 @@
 
 
+
 from django.shortcuts import render,HttpResponse,redirect
 from django.http import JsonResponse
 import json
@@ -7,10 +8,15 @@ import datetime
 from .models import *
 from .utils import cookieCart, cartData, guestOrder
 from django.contrib.auth.models import User,auth
-from django.contrib.auth import authenticate
 from .models import Customer
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.models import User,auth
+from django.contrib.auth.forms import UserCreationForm
+from.forms import SignUpForm
+from django import forms
+from django.contrib import messages
 
-from django.db.models import Q
+
 
 
 def store(request):
@@ -106,36 +112,44 @@ def processOrder(request):
 
 
 
-def login(request):
+def login_user(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
-        user=authenticate(username=username,password=password)
+        user=authenticate(request,username=username,password=password)
 
         if user is not None:
             auth.login(request,user)
+            messages.success(request,'You have logged in succesfully')
             return redirect('store')
         else:
-            error_message = "Invalid username or password. Please try again."
-            return render(request, 'store/login.html', {'error_message': error_message})
+            messages.success(request, 'Sorry! there was an error...Try Again')
+            return redirect('login')
+    else:
+            return render(request,'store/login.html')
 
-    return render(request,'store/login.html')
 
-def signup(request):
+def logout_user(request):
+    logout(request)
+    messages.success(request,' You have logged out...Thank you for visit')
+    return redirect('store')
+
+
+def signup_user(request):
+    form = SignUpForm()
     if request.method=='POST':
-        uname=request.POST['username']
-        email=request.POST['email']
-        pass1=request.POST['password']
-        pass2=request.POST['confirm_password']
-        if pass1!= pass2:
-            return HttpResponse("your password and confirm password is not true")
-
-        data =User.objects.create_user(username=uname, email=email, password=pass1)
-        data.save()
-
-        return redirect("login")
-
-
-    return render(request,'store/signup.html')
-
-
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username=forms.cleaned_data["username"]
+            password=forms.cleaned_data["password1"]
+            #log in user
+            user= authenticate(username=username,password=password)
+            login(request,user)
+            messages.success(request,"You have registered succesfully")
+            return redirect('store')
+        else:
+            messages.error(request, "Whoops! there was a problem registering...Please try again")
+            return redirect('signup')
+    else:
+           return render(request,'store/signup.html',{'form':form})

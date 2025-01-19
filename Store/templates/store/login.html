@@ -24,8 +24,6 @@
         .form-container img {
             width: 120px; /* Logo size */
             margin-bottom: 30px;
-             border: 4px solid #00796b; /* Add border around the logo */
-             border-radius: 50%; /* Optional: Make the border rounded (circle) */
              padding: 8px; /* Optional: Space between the image and border */
         }
 
@@ -82,7 +80,28 @@
 
         <!-- Login Form -->
         <h3 class="text-center">Login</h3>
-        <form action="/login" method="POST">
+        <form action="{% url 'login' %}" method="POST">
+            {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-info" id="message-{{ forloop.counter }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+        // Select all message elements
+        setTimeout(function() {
+            // Loop over each message div
+            const messages = document.querySelectorAll('.alert-info');
+            messages.forEach(function(message) {
+                message.style.display = 'none';  // Hide the message after 3 seconds
+            });
+        }, 3000);  // 3000 ms = 3 seconds
+    </script>
+{% endif %}
+
             {% csrf_token %}
             <div class="mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
