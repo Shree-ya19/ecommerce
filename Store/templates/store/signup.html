@@ -102,6 +102,7 @@
         <h3 class="text-center">Sign Up</h3>
         <form action="{% url 'signup' %}" method="POST">
             {% csrf_token %}
+
             <div class="mb-3">
                 <input type="text" class="form-control" id="signupUsername" name="username" placeholder="Choose a username" required>
             </div>
@@ -117,6 +118,7 @@
             <button type="submit" class="btn btn-primary w-100">Sign Up</button>
         </form>
 
+        {{form.errors}}
         <!-- Login Link -->
         <div class="text-center mt-3">
             <p>Already have an account? <a href="/login">Login</a></p>

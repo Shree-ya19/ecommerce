@@ -12,7 +12,7 @@ from .models import Customer
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User,auth
 from django.contrib.auth.forms import UserCreationForm
-from.forms import SignUpForm
+from.forms import CreateUserForm
 from django import forms
 from django.contrib import messages
 
@@ -114,8 +114,8 @@ def processOrder(request):
 
 def login_user(request):
     if request.method=='POST':
-        username=request.POST['username']
-        password=request.POST['password']
+        username=request.POST.get('username')
+        password=request.POST.get('password')
         user=authenticate(request,username=username,password=password)
 
         if user is not None:
@@ -136,20 +136,16 @@ def logout_user(request):
 
 
 def signup_user(request):
-    form = SignUpForm()
+    form = CreateUserForm()
+
     if request.method=='POST':
-        form = SignUpForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            username=form.cleaned_data["username"]
-            password=form.cleaned_data["password1"]
-            #log in user
-            user= authenticate(username=username,password=password)
-            login(request,user)
-            messages.success(request,"You have registered succesfully")
-            return redirect('store')
-        else:
-            messages.error(request, "Whoops! there was a problem registering...Please try again")
-            return redirect('signup')
-    else:
-           return render(request,'store/signup.html',{'form':form})
+            user=form.cleaned_data.get('username')
+            messages.success(request,'Account was created for ' + user)
+            return redirect('login')
+
+
+
+    return render(request,'store/signup.html',{'form': form})
