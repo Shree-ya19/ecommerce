@@ -1,6 +1,3 @@
-
-
-
 from django.shortcuts import render,HttpResponse,redirect
 from django.http import JsonResponse
 import json
@@ -15,6 +12,8 @@ from django.contrib.auth.forms import UserCreationForm
 from.forms import CreateUserForm
 from django import forms
 from django.contrib import messages
+from .models import Product
+from django.db.models import Q
 
 
 def home(request):
@@ -153,4 +152,16 @@ def signup_user(request):
     return render(request,'store/signup.html',{'form': form})
 
 def search(request):
-    return render(request,'store/search.html')
+    #Determine if they filled out the form
+    if request.method == 'POST':
+       searched = request.POST['searched']
+       #Query the products DB model
+       searched = Product.objects.filter(name__icontains= searched)
+       #test for null
+       if not searched :
+           messages.success(request, 'Sorry That Product Doesnot Exit')
+           return render(request, 'store/search.html' )
+       else:
+          return render(request, 'store/search.html',{"searched":searched} )
+    else:
+        return render(request,'store/search.html',)
