@@ -1,55 +1,7 @@
- {% load static %}
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Search</title>
+{% extends 'store/main.html' %}
+{% load static %}
 
-    <!-- Add Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Add Bootstrap JS (Optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <style>
-        /* Custom Navbar Background Color */
-        .navbar-custom {
-            background-color: #008080; /* Replace with your store's navbar color */
-        }
-
-        .navbar-brand {
-            font-size: 36px;
-            font-weight: bold;
-            text-align: center;
-            width: 100%;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: center;
-        }
-
-        /* Optional: style for the back button */
-        .navbar .btn {
-            margin-left: auto;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom" style="background-color: #008080; height: 80px;">
-        <div class="container">
-
-            <a class="navbar-brand" href="{% url 'store' %}" style="font-size: 36px; font-weight: bold; color: #fff; text-decoration:none; font-family: 'Times New Roman', sans-serif;">
-                Re Store
-            </a>
-            <a href="{% url 'store' %}" class="btn btn-warning" style="margin-right: 10px; font-family: 'Times New Roman', sans-serif;">Back</a>
-        </div>
-    </nav>
-
+{% block content %}
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-12">
@@ -71,6 +23,7 @@
                         </div>
                     </div>
                     <br><br/>
+
                     {% if searched %}
                         <div class="row">
                             {% for product in searched %}
@@ -79,7 +32,6 @@
                                     <div class="box-element product">
                                         <h6><strong>{{ product.name }}</strong></h6>
                                         <hr>
-
                                         <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                                         <a class="btn btn-outline-success" href="#">View</a>
                                         <h4 style="display: inline-block; float: right"><strong>Rs {{ product.price }}</strong></h4>
@@ -92,13 +44,4 @@
             </div>
         </div>
     </div>
-    
-
-
-    <!-- Add Bootstrap JS dependencies (Optional, but necessary for some components like dropdowns or modals) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
-</body>
-</html>
+{% endblock content %}

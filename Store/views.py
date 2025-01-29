@@ -151,17 +151,28 @@ def signup_user(request):
 
     return render(request,'store/signup.html',{'form': form})
 
+
+
 def search(request):
-    #Determine if they filled out the form
-    if request.method == 'POST':
-       searched = request.POST['searched']
-       #Query the products DB model
-       searched = Product.objects.filter(name__icontains= searched)
-       #test for null
-       if not searched :
-           messages.success(request, 'Sorry That Product Doesnot Exit')
-           return render(request, 'store/search.html' )
-       else:
-          return render(request, 'store/search.html',{"searched":searched} )
+    # Get the data for the cart
+    data = cartData(request)
+
+    # Get the number of items in the cart
+    cartItems = data['cartItems']
+
+    query = request.POST.get('searched', '').lower()  # Get the search query and make it case-insensitive
+    products = Product.objects.all()  # Get all products from the database
+
+    if query:
+        # Initialize an empty list to store search results
+        searched = []
+
+        # Apply linear search by iterating through all products
+        for product in products:
+            if query in product.name.lower():  # Check if the search term is in the product name (case-insensitive)
+                searched.append(product)
     else:
-        return render(request,'store/search.html',)
+        searched = products  # If no search term is entered, show all products
+
+    # Pass `cartItems` and `searched` to the template
+    return render(request, 'store/search.html', {'searched': searched, 'cartItems': cartItems})
