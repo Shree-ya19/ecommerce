@@ -114,20 +114,25 @@ def processOrder(request):
 
 
 def login_user(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        user=authenticate(request,username=username,password=password)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            auth.login(request,user)
-            messages.success(request,'You have logged in succesfully')
-            return redirect('store')
+            login(request, user)
+
+            # *Check if user has a customer, if not, create one*
+            if not hasattr(user, 'customer'):
+                Customer.objects.create(user=user, name=user.username, email=user.email)
+
+            messages.success(request, 'You have logged in successfully')
+            return redirect('store')  # Adjust redirect as needed
         else:
-            messages.success(request, 'Sorry! there was an error...Try Again')
+            messages.error(request, 'Sorry! There was an error. Try Again')
             return redirect('login')
-    else:
-            return render(request,'store/login.html')
+
+    return render(request, 'store/login.html')
 
 
 def logout_user(request):
